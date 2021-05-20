@@ -19,28 +19,26 @@ def get_top_investissement(list_actions, mise_max_par_client=500, porte_monnaie=
     investissement = []
     total_return = 0
     for action in top_actions:
-        if action["price"] > 0:
+        if 0 < action["price"] <= mise_max_par_client:
             # if action["price"] + porte_monnaie > mise_max_par_client:
-            #     continue
-            # if action["price"] == 42:
             #     continue
             investissement.append(action)
             porte_monnaie += action["price"]
             benef = (action["price"] * action["profit"]) / 100
-            print(benef)
             total_return += benef
+            # autre manière de procéder
             if porte_monnaie > mise_max_par_client:
                 investissement.pop(-1)
                 porte_monnaie -= action["price"]
                 total_return -= benef
                 break
-
+            print(benef)
     # print(f"total cost : {round(porte_monnaie, 2)}")
     # print(f"total return : {round(total_return, 2)}")
     return investissement, round(porte_monnaie, 2), round(total_return, 2)
 
 
-test = get_top_investissement(data["les_20_actions"])
+test = get_top_investissement(data["Sienna_dataset2"])
 print()
 pprint(test[0])
 print(f" total cost : {test[1]}")
