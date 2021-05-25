@@ -38,7 +38,7 @@ def get_top_investissement(list_actions, mise_max_par_client=500, porte_monnaie=
     return investissement, round(porte_monnaie, 2), round(total_return, 2)
 
 
-test = get_top_investissement(data["Sienna_dataset2"])
+test = get_top_investissement(data["les_20_actions"])
 print()
 pprint(test[0])
 print(f" total cost : {test[1]}")
