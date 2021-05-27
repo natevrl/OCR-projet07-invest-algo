@@ -18,15 +18,18 @@ def get_top_investissement(list_actions, mise_max_par_client=500, porte_monnaie=
     pprint(top_actions)
     investissement = []
     total_return = 0
+    moyenne_profits = 0
     for action in top_actions:
         if 0 < action["price"] <= mise_max_par_client:
+            # option 1 :
             # if action["price"] + porte_monnaie > mise_max_par_client:
             #     continue
             investissement.append(action)
             porte_monnaie += action["price"]
             benef = (action["price"] * action["profit"]) / 100
+            moyenne_profits += action["profit"]
             total_return += benef
-            # autre manière de procéder
+            # option 2
             if porte_monnaie > mise_max_par_client:
                 investissement.pop(-1)
                 porte_monnaie -= action["price"]
@@ -35,14 +38,15 @@ def get_top_investissement(list_actions, mise_max_par_client=500, porte_monnaie=
             print(benef)
     # print(f"total cost : {round(porte_monnaie, 2)}")
     # print(f"total return : {round(total_return, 2)}")
-    return investissement, round(porte_monnaie, 2), round(total_return, 2)
+    return investissement, round(porte_monnaie, 2), round(total_return, 2), round(total_return/porte_monnaie*100, 2)
 
 
 test = get_top_investissement(data["les_20_actions"])
-print()
+print("\nSelon l'algo, voici la meilleurs combinaison d'action : ")
 pprint(test[0])
 print(f" total cost : {test[1]}")
 print(f" total return : {test[2]}")
+print(f" profits : {test[3]}%")
 
 
 # for numb, action in  enumerate(get_top_investissement(data["Sienna_dataset1"])):
